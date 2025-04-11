@@ -1,0 +1,425 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Recipe Website</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    
+    <style>
+      * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background: linear-gradient(135deg, #ffe6e6, #fff5cc);
+    color: #333;
+    line-height: 1.6;
+
+  }
+
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #ff9999;
+    color: white;
+  }
+
+  .navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .navbar .nav-links a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .navbar .nav-links a:hover {
+    color: #ffd6d6;
+  }
+
+
+  .hero {
+    background-image: url('hero.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 50vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    padding: 1rem;  
+  }
+
+
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+  }
+
+  .hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-content p {
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-content button {
+    background-color: #ffcccb;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+
+  .hero-content button:hover {
+    background-color: #ffa3a3;
+  }
+
+
+  .recipes {
+    padding: 2rem;
+    background-color: #fffaf0;
+  }
+
+  .recipes h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .recipe-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+
+  .recipe-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 280px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    margin: 0 10px;  
+    padding: 1rem;  
+    box-sizing: border-box;  
+  }
+
+
+  .recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .recipe-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .recipe-card h3 {
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+  }
+
+  .recipe-card p {
+    padding: 0 1rem 1rem;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 30px;
+    overflow-y: auto;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background: white;
+    padding: 1.5rem; 
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    max-height: 90vh; 
+    overflow-y: auto;  
+    box-sizing: border-box;
+  }
+  .modal-content img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .modal-content .close {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+
+  footer {
+    background-color: #ffcccc;
+    color: #333;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  footer .social-links a {
+    margin: 0 0.5rem;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  footer .social-links a:hover {
+    color: #ff6666;
+  }
+
+
+  
+
+  @media (max-width: 768px) {
+    .nav-links {
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .hero-content h1 {
+      font-size: 2rem;
+    }
+
+    .recipe-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+  }
+
+    </style>
+    <nav class="navbar">
+      <div class="logo">Jakerz Recipes</div>
+      <ul class="nav-links">
+        <li><a href="#" onclick="refreshPage()">Home</a></li>
+        <li><a href="#recipes">Recipes</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    
+    <header class="hero">
+      <div class="hero-content">
+        <h1>Discover Delicious Recipes Now</h1>
+        <p>Cook with love, Share with joy.</p>
+        <button onclick="scrollToRecipes()">Explore Recipes</button>
+      </div>
+    </header>
+
+
+    <section id="recipes" class="recipes">
+      <h2>Top Filipino Picks</h2>
+      <div class="recipe-grid">
+        <div class="recipe-card" onclick="openModal('Adobo',   ['-Soy sauce', '-Chicken or Pork', '-Vinegar', 
+        '-Garlic', '-Bay leaves', '-Whole peppercorn', '-Water', '-Cooking oil', '-Salt (Optional)', 
+        '-Sugar (Optional)' ] , 'adobo.jpg')">
+          <img src="adobo.jpg" alt="Adobo">
+          <h3>Adobo</h3>
+          <p>A very overrated food but is still the best of the best.</p>
+        </div>
+        <div class="recipe-card" onclick="openModal('Pork Sinigang', ['-Pork belly or ribs', '-Tamarind', 
+        '-Water', '-Tomatoes', '-Onion', '-Radish', '-String beans', '-Kangkong', '-Eggplant', 
+        '-Green chili', '-Fish sauce', '-Salt'], 'sinigang.jpg')">
+          <img src="sinigang.jpg" alt="Sinigang">
+          <h3>Pork Sinigang</h3>
+          <p>Mapapaasim kilig ka for realz, mas maasim pa to sa nanay mo.</p>
+        </div>
+        <div class="recipe-card" onclick="openModal('Kare-Kare', ['-Pork or beef', 
+        '-Peanut butter or ground peanuts', '-Annatto seeds or powder', '-String beans', '-Banana heart', 
+        '-Eggplant', '-Pechay', '-Garlic', '-Onion', '-Salt', '-Shrimp paste'], 'kare.jpg')">
+          <img src="kare.jpg" alt="Kare">
+          <h3>Kare-Kare</h3>
+          <p>A very overrated food but is still the best of the best..</p>
+        </div>
+        <div class="recipe-card" onclick="openModal('Bicol Express', ['-Pork belly', '-Coconut milk', 
+        '-Coconut cream', '-Garlic', '-Onion', '-Shrimp paste', '-Siling haba or siling labuyo', '-Salt']
+        , 'bicol.jpg')">
+          <img src="bicol.jpg" alt="Bicol">
+          <h3>Bicol Express</h3>
+          <p>A very overrated food but is still the best of the best..</p>
+        </div>
+        <div class="recipe-card" onclick="openModal('Menudo', ['-Pork', '-Pork liver', '-Potatoes', 
+        '-Carrots', '-Green peas', '-Bell peppers', '-Tomato sauce', '-Garlic', '-Onion', '-Soy sauce', 
+        '-Vinegar', '-Salt', '-Pepper'], 'menudo.jpg')">
+          <img src="menudo.jpg" alt="Menudo">
+          <h3>Menudo</h3>
+          <p>A very overrated food but is still the best of the best..</p>
+        </div>
+        <div class="recipe-card" onclick="openModal('Paksiw na Pata', ['-Pork feet', '-Soy sauce', '-Vinegar', 
+        '-Garlic', '-Bay leaves', '-Banana blossoms', '-Sugar', '-Peppercorn', '-Water'], 'pata.jpg')">
+          <img src="pata.jpg" alt="Pata">
+          <h3>Paksiw na Pata</h3>
+          <p>A very overrated food but is still the best of the best..</p>
+        </div>
+        <div class="recipe-card" onclick="openModal('Pinakbet', ['-Pork belly or shrimp', '-Squash', 
+        '-Eggplant', '-Okra', '-String beans', '-Bitter melon', '-Tomatoes', '-Onion', '-Garlic', 
+        '-Bagoong'], 'pakbet.jpg')">
+          <img src="pakbet.jpg" alt="Pinakbet">
+          <h3>Pinakbet</h3>
+          <p>A very overrated food but is still the best of the best..</p>
+        </div>
+        <div class="recipe-card" onclick="openModal('Afritada', ['-Chicken or pork', '-Tomato sauce', 
+        '-Potatoes', '-Carrots', '-Bell peppers', '-Garlic', '-Onion', '-Peas', '-Salt', '-Pepper']
+          , 'afritada.jpg')">
+          <img src="afritada.jpg" alt="Afritada">
+          <h3>Afritada</h3>
+          <p>A very overrated food but is still the best of the best..</p>
+        </div>
+        <div class="recipe-card" onclick="openModal('Tinola', ['-Chicken', '-Green papaya or chayote', 
+        '-Malunggay or chili leaves', '-Ginger', '-Garlic', '-Onion', '-Fish sauce', '-Water', '-Salt']
+        , 'tinola.jpg')">
+          <img src="tinola.jpg" alt="Tinola">
+          <h3>Tinola</h3>
+          <p>A very overrated food but is still the best of the best..</p>
+        </div>
+        <div class="recipe-card" onclick="openModal('Spaghetti (Filipino-Style)', ['-Spaghetti noodles', 
+        '-Ground pork or ground beef', '-Filipino-style spaghetti sauce', '-Hotdogs', '-Onion', '-Garlic', 
+        '-Grated cheese', '-Banana ketchup', '-Sugar', '-Salt', '-Cooking oil'], 'spag.jpg')">
+          <img src="spag.jpg" alt="Spaghetti">
+          <h3>Spaghetti (Filipino-Style)</h3>
+          <p>A very overrated food but is still the best of the best..</p>
+        </div>
+        <div class="recipe-card" onclick="openModal('Dinuguan', ['-Pork meat and offal', '-Pork blood', 
+        '-Vinegar', '-Garlic', '-Onion', '-Green chili', '-Bay leaves', '-Salt', '-Pepper', '-Water']
+        , 'dinuguan.jpg')">
+          <img src="dinuguan.jpg" alt="Dinuguan">
+          <h3>Dinuguan</h3>
+          <p>A very overrated food but is still the best of the best..</p>
+        </div>
+        <div class="recipe-card" onclick="openModal('Sisig', ['-Pork', '-Pork liver', '-Potatoes', 
+        '-Carrots', '-Green peas', '-Bell peppers', '-Tomato sauce', '-Garlic', '-Onion', '-Soy sauce', 
+        '-Vinegar', '-Salt', '-Pepper'], 'sisig.jpg')">
+          <img src="sisig.jpg" alt="Sisig">
+          <h3>Sisig</h3>
+          <p>A very overrated food but is still the best of the best..</p>
+        </div>
+
+      
+      
+      
+      </div>
+    </section>
+
+  
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modal-title"></h2>
+        <img id="modal-image" src="" alt="">
+        <p id="modal-description"></p>
+      </div>
+    </div>
+
+
+    <footer id="contact">
+      <p>Contact us at: JakerzPeppers@gmail.com</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/ninongry/?locale=tl_PH" target="_blank">Facebook</a>
+        <a href="https://www.instagram.com/ninongry/" target="_blank">Instagram</a>
+      </div>
+      <p>&copy; 2025 Jakerz Peppers Recipes. All rights reserved.</p>
+    </footer>
+
+    
+    <script>
+    
+    function refreshPage() {
+  location.reload(); 
+  
+}
+
+     
+     
+     function scrollToRecipes() {
+        document.getElementById("recipes").scrollIntoView({ behavior: "smooth" });
+      }
+
+      function openModal(title, ingredients, imageSrc) {
+      const modal = document.querySelector('.modal');
+      const modalTitle = modal.querySelector('h2');
+      const modalImage = modal.querySelector('img');
+      const modalDescription = modal.querySelector('#modal-description'); 
+
+      modalTitle.textContent = title;
+      modalImage.src = imageSrc;
+
+      
+      let ingredientList = '<ul>';
+      ingredients.forEach(ingredient => {
+        ingredientList += `<li>${ingredient}</li>`;
+      });
+      ingredientList += '</ul>';
+
+      modalDescription.innerHTML = ingredientList; 
+
+      modal.style.display = 'flex';
+    
+      modal.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+    
+  }
+
+
+      
+
+      function closeModal() {
+        document.getElementById("modal").style.display = "none";
+      }
+    </script>
+  </body>
+  </html>
